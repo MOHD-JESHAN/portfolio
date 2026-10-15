@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohd Jeshan — Computer Science Engineer & Full-Stack Developer</title>
+  <meta name="description" content="Portfolio of Mohd Jeshan: Computer Science Engineering student passionate about UI/UX design, full-stack web development, artificial intelligence, and cloud computing. Innovator behind Medivision.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body class="selection:bg-sky-500/30 selection:text-sky-200">
+
+  <!-- Interactive 60fps Particle Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Top Navigation Bar -->
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+      <nav class="glass-panel rounded-2xl px-5 py-3.5 flex items-center justify-between border border-slate-700/50 shadow-2xl backdrop-blur-xl">
+        <!-- Logo / Brand -->
+        <a href="#hero" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-slate-950 font-black font-mono shadow-lg shadow-sky-500/20 group-hover:scale-105 transition">
+            MJ
+          </div>
+          <div>
+            <span class="font-bold text-sm tracking-tight text-slate-100 flex items-center gap-1.5">
+              Mohd Jeshan
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            </span>
+            <span class="text-[10px] text-slate-400 font-mono block -mt-0.5">CS Engineer & Developer</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <div class="hidden md:flex items-center gap-1 text-sm font-medium text-slate-300">
+          <a href="#about" class="px-3.5 py-1.5 rounded-lg hover:text-sky-400 hover:bg-slate-800/60 transition">About</a>
+          <a href="#skills" class="px-3.5 py-1.5 rounded-lg hover:text-sky-400 hover:bg-slate-800/60 transition">Skills</a>
+          <a href="#projects" class="px-3.5 py-1.5 rounded-lg hover:text-sky-400 hover:bg-slate-800/60 transition">Projects</a>
+          <a href="#education" class="px-3.5 py-1.5 rounded-lg hover:text-sky-400 hover:bg-slate-800/60 transition">Education</a>
+          <a href="#terminal-section" class="px-3.5 py-1.5 rounded-lg hover:text-sky-400 hover:bg-slate-800/60 transition font-mono text-xs flex items-center gap-1.5">
+            <i data-lucide="terminal" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>CLI</span>
+          </a>
+          <a href="#contact" class="px-3.5 py-1.5 rounded-lg hover:text-sky-400 hover:bg-slate-800/60 transition">Contact</a>
+        </div>
+
+        <!-- Utility Controls (Theme, Sound, Command Palette, Contact CTA) -->
+        <div class="flex items-center gap-2">
+          <!-- Command Palette Pill -->
+          <button class="open-cmd-palette-btn hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/60 border border-slate-700/60 text-xs text-slate-400 hover:text-slate-200 transition">
+            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+            <span>Cmd+K</span>
+          </button>
+
+          <!-- Audio FX Toggle -->
+          <button id="sound-toggle-btn" class="p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 border border-slate-700/50 transition" title="Toggle UI Audio FX">
+            <i data-lucide="volume-2" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button id="theme-toggle-btn" class="p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 border border-slate-700/50 transition flex items-center gap-1.5" title="Switch Theme (Dark, Light, Cyber)">
+            <i data-lucide="palette" class="w-4 h-4"></i>
+            <span id="current-theme-label" class="text-xs font-mono hidden sm:inline">Dark</span>
+          </button>
+
+          <!-- LinkedIn Profile CTA Button -->
+          <a href="https://linkedin.com/in/mohd-jeshan-94a609399" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-sky-400 to-indigo-500 text-slate-950 font-bold text-xs shadow-md shadow-sky-500/20 hover:opacity-95 transition">
+            <i data-lucide="linkedin" class="w-3.5 h-3.5"></i>
+            <span>LinkedIn</span>
+            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          </a>
+
+          <!-- Mobile Hamburger -->
+          <button id="mobile-menu-btn" class="p-2 md:hidden rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800/60">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile Dropdown Drawer -->
+      <div id="mobile-menu-drawer" class="hidden md:hidden mt-2 glass-panel rounded-2xl p-4 border border-slate-700/60 space-y-2">
+        <a href="#about" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-800">About</a>
+        <a href="#skills" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-800">Technical Skills</a>
+        <a href="#projects" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-800">Projects & Medivision</a>
+        <a href="#education" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-800">Education & Certifications</a>
+        <a href="#terminal-section" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-800">Interactive CLI</a>
+        <a href="#contact" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-800">Connect & Hire</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrap -->
+  <main class="relative z-10 pt-28 pb-20">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Left: Headline & Introduction -->
+        <div class="lg:col-span-7 space-y-6">
+          <!-- Availability Badge -->
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 border border-emerald-500/30 text-emerald-400 text-xs font-mono backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>Open for Internships, Junior SDE Roles & Freelance</span>
+          </div>
+
+          <!-- Main Title -->
+          <div class="space-y-2">
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-100">
+              Transforming Ideas into <br>
+              <span class="gradient-text">Practical Digital Solutions</span> <br>
+              & Modern Experiences.
+            </h1>
+            <div class="h-8 flex items-center text-lg sm:text-xl font-mono text-sky-400 font-medium">
+              <span>&gt; </span>
+              <span id="typing-text" class="ml-2"></span>
+              <span class="cursor-blink ml-1"></span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <p class="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
+            I am a Computer Science Engineering student and technology enthusiast passionate about 
+            <strong class="text-sky-300">UI/UX design</strong>, <strong class="text-sky-300">full-stack web development</strong>, 
+            <strong class="text-emerald-300">artificial intelligence</strong>, and <strong class="text-indigo-300">cloud computing</strong>. 
+            Creator of <span class="text-sky-400 font-semibold underline decoration-sky-500/50">Medivision</span>, an innovative AI-assisted clinical intake software concept.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#projects" class="glow-btn px-6 py-3 rounded-xl bg-gradient-to-r from-sky-400 to-indigo-500 text-slate-950 font-bold text-sm shadow-xl shadow-sky-500/20 hover:opacity-95 transition flex items-center gap-2">
+              <span>View Projects & Medivision</span>
+              <i data-lucide="arrow-down" class="w-4 h-4"></i>
+            </a>
+
+            <a href="#terminal-section" class="px-5 py-3 rounded-xl glass-panel text-slate-200 hover:text-white text-sm font-mono flex items-center gap-2 border border-slate-700/60 transition">
+              <i data-lucide="terminal" class="w-4 h-4 text-emerald-400"></i>
+              <span>Interactive CLI</span>
+            </a>
+
+            <button id="copy-email-btn" class="px-4 py-3 rounded-xl glass-panel text-slate-300 hover:text-sky-300 text-sm flex items-center gap-2 border border-slate-700/60 transition" title="Copy email address to clipboard">
+              <i data-lucide="copy" class="w-4 h-4"></i>
+              <span>Copy Email</span>
+            </button>
+          </div>
+
+          <!-- Social Badges -->
+          <div class="flex items-center gap-5 pt-4 text-slate-400 text-xs">
+            <span class="text-slate-400 font-mono">PROFILES:</span>
+            <a href="https://linkedin.com/in/mohd-jeshan-94a609399" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition flex items-center gap-1.5 font-medium">
+              <i data-lucide="linkedin" class="w-4 h-4 text-sky-400"></i>
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://github.com/mohdjeshan" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition flex items-center gap-1.5 font-medium">
+              <i data-lucide="github" class="w-4 h-4 text-slate-300"></i>
+              <span>GitHub</span>
+            </a>
+            <a href="#contact" class="hover:text-sky-400 transition flex items-center gap-1.5 font-medium">
+              <i data-lucide="mail" class="w-4 h-4 text-emerald-400"></i>
+              <span>mohd.jeshan.dev@gmail.com</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Glass Card with Profile Picture and Live Snapshot -->
+        <div class="lg:col-span-5">
+          <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-700/60 relative overflow-hidden shadow-2xl">
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-sky-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+              <div class="flex items-center gap-4">
+                <!-- User's Real Profile Picture -->
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-sky-400 to-indigo-500 p-0.5 shadow-xl relative group">
+                  <img src="./assets/images/profile.jpg" alt="Mohd Jeshan" class="w-full h-full object-cover rounded-[14px]">
+                  <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-slate-900"></span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-slate-100 flex items-center gap-1.5">
+                    Mohd Jeshan
+                  </h3>
+                  <p class="text-xs text-sky-400 font-mono">@mohdjeshan • India / Remote</p>
+                  <p class="text-[11px] text-slate-400 mt-0.5">CS Engineering Student</p>
+                </div>
+              </div>
+              <div class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
+                Active
+              </div>
+            </div>
+
+            <!-- Focus Matrix -->
+            <div class="py-5 space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-slate-400 flex items-center gap-2">
+                  <i data-lucide="layout" class="w-3.5 h-3.5 text-sky-400"></i> Core Focus
+                </span>
+                <span class="text-slate-200 font-mono font-medium">UI/UX & Full-Stack Web</span>
+              </div>
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-slate-400 flex items-center gap-2">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-400"></i> Flagship Concept
+                </span>
+                <span class="text-slate-200 font-mono font-medium">Medivision (AI Healthcare)</span>
+              </div>
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-slate-400 flex items-center gap-2">
+                  <i data-lucide="cpu" class="w-3.5 h-3.5 text-indigo-400"></i> Emerging Tech
+                </span>
+                <span class="text-slate-200 font-mono font-medium">Generative AI, OCR & Cloud</span>
+              </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div id="hero-stats-container" class="grid grid-cols-2 gap-3 pt-2">
+              <!-- Dynamically populated from data.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHY / ABOUT SECTION -->
+    <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <h2 class="text-xs uppercase tracking-widest text-sky-400 font-mono font-semibold mb-2">About & Methodology</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-slate-100">Design, Development & Emerging Tech</p>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          I enjoy bridging creative human-centered interface design with solid backend architecture, artificial intelligence, and cloud scalability.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Principle 1 -->
+        <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center mb-6">
+              <i data-lucide="palette" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-100 mb-2">User-Centric UI/UX Design</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Every meaningful product starts with wireframing and prototyping. I focus on intuitive visual hierarchy, accessible interactions, responsive layouts, and delightful design ergonomics.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-800/80 text-xs font-mono text-sky-400">
+            • Figma, Wireframing & Responsive Web
+          </div>
+        </div>
+
+        <!-- Principle 2 -->
+        <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mb-6">
+              <i data-lucide="code-2" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-100 mb-2">Modern Full-Stack Development</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Building end-to-end web applications with React, Next.js, Node.js, Express, MongoDB, and REST APIs. Writing clean, modular code with strong foundations in C, C++, and Python.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-800/80 text-xs font-mono text-indigo-400">
+            • MERN Stack & RESTful Architecture
+          </div>
+        </div>
+
+        <!-- Principle 3 -->
+        <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-6">
+              <i data-lucide="sparkles" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-100 mb-2">AI & Cloud Innovation</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Leveraging Generative AI, LLM APIs, OCR, and AWS cloud services to solve real-world problems. Proven through projects like Medivision for healthcare automation.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-800/80 text-xs font-mono text-emerald-400">
+            • Generative AI, OCR & AWS Cloud
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECHNICAL SKILLS MATRIX -->
+    <section id="skills" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <h2 class="text-xs uppercase tracking-widest text-sky-400 font-mono font-semibold mb-2">Technical Proficiency</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-slate-100">Skills, Frameworks & Tooling</p>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">Languages, frameworks, design tools, and cloud platforms I work with.</p>
+      </div>
+
+      <div id="skills-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Dynamically rendered via app.js & data.js -->
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS SHOWCASE -->
+    <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+        <div>
+          <h2 class="text-xs uppercase tracking-widest text-sky-400 font-mono font-semibold mb-2">Portfolio Showcase</h2>
+          <p class="text-3xl sm:text-4xl font-extrabold text-slate-100">Key Innovation Projects</p>
+          <p class="text-slate-400 text-sm sm:text-base mt-2">Featuring Medivision healthcare concept, AI OCR pipelines, and web applications.</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap items-center gap-2 glass-panel p-1.5 rounded-xl border border-slate-700/60">
+          <button class="project-filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-sky-500 text-slate-950 transition active" data-category="all">
+            All Projects
+          </button>
+          <button class="project-filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800/60 text-slate-300 hover:text-white transition" data-category="ai">
+            AI & Medivision
+          </button>
+          <button class="project-filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800/60 text-slate-300 hover:text-white transition" data-category="frontend">
+            UI/UX & Web
+          </button>
+          <button class="project-filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800/60 text-slate-300 hover:text-white transition" data-category="fullstack">
+            Full-Stack MERN
+          </button>
+        </div>
+      </div>
+
+      <!-- Projects Grid -->
+      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Dynamically rendered via app.js & data.js -->
+      </div>
+    </section>
+
+    <!-- EDUCATION & CERTIFICATIONS SECTION -->
+    <section id="education" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <h2 class="text-xs uppercase tracking-widest text-sky-400 font-mono font-semibold mb-2">Academic & Credentials</h2>
+        <p class="text-3xl font-extrabold text-slate-100">Education & Verified Certifications</p>
+        <p class="text-slate-400 text-sm mt-2">Formal coursework, technical programs, and continuous learning achievements.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Left: Education & Coursework -->
+        <div class="lg:col-span-6 glass-panel p-8 rounded-3xl border border-slate-700/60">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center">
+              <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-slate-100">Computer Science & Engineering</h3>
+              <p class="text-xs text-sky-400 font-mono">B.Tech / Degree Program • In Progress</p>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            Building rigorous mathematical, analytical, and computational foundations across modern software systems, algorithmic thinking, and system architecture.
+          </p>
+
+          <div>
+            <h4 class="text-xs font-mono text-slate-400 uppercase tracking-wider mb-3">Core Coursework</h4>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-slate-200 font-mono">Data Structures & Algorithms</span>
+              <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-slate-200 font-mono">Object-Oriented Programming (C++/Java)</span>
+              <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-slate-200 font-mono">Database Management Systems (DBMS)</span>
+              <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-slate-200 font-mono">Operating Systems</span>
+              <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-slate-200 font-mono">Computer Networks</span>
+              <span class="text-xs px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-slate-200 font-mono">Web Technologies</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Certifications & Workshops -->
+        <div class="lg:col-span-6 glass-panel p-8 rounded-3xl border border-slate-700/60">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
+              <i data-lucide="award" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-slate-100">Verified Certifications</h3>
+              <p class="text-xs text-emerald-400 font-mono">Specialized Technical Programs</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-start gap-3">
+              <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+              <div>
+                <h5 class="text-sm font-bold text-slate-100">Full-Stack Web Development & Modern JavaScript</h5>
+                <p class="text-xs text-slate-400 mt-0.5">React, Node.js, Express, MongoDB & RESTful APIs</p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-start gap-3">
+              <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+              <div>
+                <h5 class="text-sm font-bold text-slate-100">UI/UX Design, Wireframing & Prototyping</h5>
+                <p class="text-xs text-slate-400 mt-0.5">User Research, Figma, Responsive Systems & Usability</p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-start gap-3">
+              <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+              <div>
+                <h5 class="text-sm font-bold text-slate-100">Generative AI, Prompt Engineering & LLM APIs</h5>
+                <p class="text-xs text-slate-400 mt-0.5">OCR Pipelines, Document Extraction & AI Workflow Design</p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-start gap-3">
+              <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+              <div>
+                <h5 class="text-sm font-bold text-slate-100">Cloud Computing & AWS Fundamentals</h5>
+                <p class="text-xs text-slate-400 mt-0.5">AWS Architecture, Cloud Deployment & DevOps Basics</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE CLI TERMINAL -->
+    <section id="terminal-section" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center mb-8">
+        <h2 class="text-xs uppercase tracking-widest text-emerald-400 font-mono font-semibold mb-2">Interactive Sandbox</h2>
+        <p class="text-3xl font-extrabold text-slate-100">Developer CLI Terminal</p>
+        <p class="text-slate-400 text-sm mt-2">Inspect Mohd Jeshan's skills, Medivision architecture, or contact channel via command line.</p>
+      </div>
+
+      <!-- Terminal Window Component -->
+      <div class="terminal-window overflow-hidden border border-slate-700 shadow-2xl">
+        <!-- Mac-style Title Bar -->
+        <div class="bg-slate-900/95 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+            <span class="text-xs text-slate-400 font-mono ml-2">jeshan@workstation: ~ (zsh)</span>
+          </div>
+          <div class="text-[11px] text-slate-400 font-mono">
+            Type <span class="text-sky-400">help</span> for commands
+          </div>
+        </div>
+
+        <!-- Terminal Output Screen -->
+        <div id="terminal-output" class="terminal-body p-5 max-h-80 overflow-y-auto space-y-2 text-slate-300">
+          <div class="text-sky-400 font-bold">
+            ⚡ Welcome to Mohd Jeshan's interactive terminal environment (v3.2.0).
+          </div>
+          <div class="text-xs text-slate-400">
+            Type commands like <span class="text-emerald-400 font-mono">help</span>, <span class="text-emerald-400 font-mono">skills</span>, <span class="text-emerald-400 font-mono">projects</span>, <span class="text-emerald-400 font-mono">medivision</span>, or <span class="text-emerald-400 font-mono">sudo hire</span>.
+          </div>
+        </div>
+
+        <!-- Terminal Input Bar -->
+        <div class="p-4 bg-slate-950/90 border-t border-slate-800 flex items-center gap-3">
+          <span class="text-emerald-400 font-mono font-bold text-sm">$</span>
+          <input
+            type="text"
+            id="terminal-input"
+            class="flex-1 bg-transparent text-sm font-mono text-slate-100 focus:outline-none placeholder-slate-600"
+            placeholder="Type 'help' and press Enter..."
+            autocomplete="off"
+            spellcheck="false"
+          >
+        </div>
+
+        <!-- Quick Terminal Pills -->
+        <div class="px-4 py-2.5 bg-slate-900/60 border-t border-slate-800/80 flex flex-wrap items-center gap-2 text-xs font-mono">
+          <span class="text-slate-400">Quick run:</span>
+          <button class="term-quick-btn px-2.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 transition" data-cmd="skills">skills</button>
+          <button class="term-quick-btn px-2.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 transition" data-cmd="projects">projects</button>
+          <button class="term-quick-btn px-2.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-emerald-300 transition" data-cmd="medivision">medivision</button>
+          <button class="term-quick-btn px-2.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 transition" data-cmd="sudo hire">sudo hire</button>
+          <button class="term-quick-btn px-2.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 transition" data-cmd="clear">clear</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE & HACKATHONS TIMELINE -->
+    <section id="experience" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center mb-14">
+        <h2 class="text-xs uppercase tracking-widest text-sky-400 font-mono font-semibold mb-2">Journey & Initiatives</h2>
+        <p class="text-3xl font-extrabold text-slate-100">Project Leadership & Hackathons</p>
+        <p class="text-slate-400 text-sm mt-2">Active participation in technical communities, hackathons, and product development.</p>
+      </div>
+
+      <div id="experience-timeline" class="space-y-2">
+        <!-- Dynamically rendered via app.js & data.js -->
+      </div>
+    </section>
+
+    <!-- CONTACT & CONNECT -->
+    <section id="contact" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-700/60 shadow-2xl relative overflow-hidden">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-mono mb-4">
+            <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+            <span>Let's Build Meaningful Technology Together</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-100">Connect with Mohd Jeshan</h2>
+          <p class="text-slate-300 text-sm mt-3">
+            I am actively exploring <strong>internships</strong>, <strong>entry-level software engineer roles</strong>, and <strong>freelance collaborations</strong>. Reach out via form or connect on LinkedIn!
+          </p>
+          <div class="pt-4 flex flex-wrap justify-center gap-4">
+            <a href="https://linkedin.com/in/mohd-jeshan-94a609399" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-[#0077b5] text-white font-semibold text-xs flex items-center gap-2 shadow hover:opacity-90 transition">
+              <i data-lucide="linkedin" class="w-4 h-4"></i>
+              <span>Connect on LinkedIn</span>
+            </a>
+            <a href="https://github.com/mohdjeshan" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-200 border border-slate-700 font-mono text-xs flex items-center gap-2 hover:bg-slate-700 transition">
+              <i data-lucide="github" class="w-4 h-4"></i>
+              <span>View GitHub Repos</span>
+            </a>
+          </div>
+        </div>
+
+        <form id="contact-form" class="space-y-5 max-w-2xl mx-auto">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-mono text-slate-300 mb-2">YOUR NAME / RECRUITER</label>
+              <input
+                type="text"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:border-sky-400 transition"
+                placeholder="Jane Doe (Recruiter / Tech Lead)"
+              >
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-300 mb-2">YOUR EMAIL ADDRESS</label>
+              <input
+                type="email"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:border-sky-400 transition"
+                placeholder="jane@company.com"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-mono text-slate-300 mb-2">SUBJECT / OPPORTUNITY</label>
+            <input
+              type="text"
+              required
+              class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:border-sky-400 transition"
+              placeholder="Internship / SDE Role / Collaboration on Medivision"
+            >
+          </div>
+
+          <div>
+            <label class="block text-xs font-mono text-slate-300 mb-2">MESSAGE</label>
+            <textarea
+              id="contact-message"
+              rows="4"
+              required
+              class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:border-sky-400 transition resize-none"
+              placeholder="Hi Mohd Jeshan, I reviewed your portfolio and would like to discuss an opportunity..."
+            ></textarea>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+            <span class="text-xs text-slate-400 flex items-center gap-1.5 font-mono">
+              <i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>Direct response guaranteed</span>
+            </span>
+
+            <button
+              type="submit"
+              class="glow-btn w-full sm:w-auto px-8 py-3 rounded-xl bg-gradient-to-r from-sky-400 to-indigo-500 text-slate-950 font-bold text-sm shadow-xl shadow-sky-500/20 hover:opacity-95 transition flex items-center justify-center gap-2"
+            >
+              <span>Transmit Message</span>
+              <i data-lucide="send" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="relative z-10 border-t border-slate-800/80 py-10 bg-slate-950/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="font-mono text-slate-200 font-semibold">Mohd Jeshan</span>
+        <span>•</span>
+        <span>Computer Science Engineer & Full-Stack Developer.</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="#hero" class="hover:text-sky-400 transition">Back to Top ↑</a>
+        <a href="https://linkedin.com/in/mohd-jeshan-94a609399" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition">LinkedIn</a>
+        <a href="https://github.com/mohdjeshan" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PROJECT CASE STUDY MODAL -->
+  <div id="project-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+    <div class="modal-content glass-panel w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-slate-700 p-6 sm:p-8 shadow-2xl relative">
+      <button id="close-modal-btn" class="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="space-y-5">
+        <div class="pr-8">
+          <p id="modal-metrics" class="text-xs font-mono text-emerald-400 font-semibold mb-1"></p>
+          <h3 id="modal-title" class="text-2xl font-bold text-slate-100"></h3>
+        </div>
+
+        <div id="modal-tags" class="flex flex-wrap gap-1.5"></div>
+
+        <div class="space-y-4 pt-3 text-sm text-slate-300 leading-relaxed border-t border-slate-800">
+          <div>
+            <h4 class="text-xs font-mono text-sky-400 uppercase tracking-wider mb-1">Project Concept & Overview</h4>
+            <p id="modal-overview" class="text-slate-300"></p>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-mono text-amber-400 uppercase tracking-wider mb-1">Key Challenges Addressed</h4>
+            <p id="modal-challenge" class="text-slate-300"></p>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-1">Technical Solution & Innovation</h4>
+            <p id="modal-solution" class="text-slate-300"></p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 pt-6 border-t border-slate-800">
+          <a id="modal-live-link" href="#" target="_blank" class="px-5 py-2.5 rounded-xl bg-sky-500 text-slate-950 font-bold text-xs hover:bg-sky-400 transition flex items-center gap-1.5">
+            <span>View Details / LinkedIn</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+          <a id="modal-github-link" href="#" target="_blank" class="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-200 font-mono text-xs hover:bg-slate-700 transition flex items-center gap-1.5">
+            <i data-lucide="github" class="w-3.5 h-3.5"></i>
+            <span>GitHub Profile</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMAND PALETTE MODAL (Ctrl+K) -->
+  <div id="command-palette" class="modal-backdrop fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-slate-950/80 backdrop-blur-md">
+    <div class="modal-content glass-panel w-full max-w-xl rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-slate-800 flex items-center gap-3">
+        <i data-lucide="search" class="w-4 h-4 text-slate-400"></i>
+        <input
+          type="text"
+          id="cmd-search-input"
+          class="flex-1 bg-transparent text-sm text-slate-100 focus:outline-none placeholder-slate-500 font-mono"
+          placeholder="Type section, project or theme..."
+        >
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">ESC to exit</span>
+      </div>
+      <div class="p-2 space-y-1 text-sm max-h-72 overflow-y-auto">
+        <button class="cmd-palette-item w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white flex items-center justify-between transition" data-action="#projects">
+          <span class="flex items-center gap-2.5"><i data-lucide="layers" class="w-4 h-4 text-sky-400"></i> View Projects & Medivision</span>
+          <span class="text-xs text-slate-400 font-mono">#projects</span>
+        </button>
+        <button class="cmd-palette-item w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white flex items-center justify-between transition" data-action="#skills">
+          <span class="flex items-center gap-2.5"><i data-lucide="cpu" class="w-4 h-4 text-indigo-400"></i> Technical Skills Matrix</span>
+          <span class="text-xs text-slate-400 font-mono">#skills</span>
+        </button>
+        <button class="cmd-palette-item w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white flex items-center justify-between transition" data-action="#education">
+          <span class="flex items-center gap-2.5"><i data-lucide="graduation-cap" class="w-4 h-4 text-emerald-400"></i> Education & Certifications</span>
+          <span class="text-xs text-slate-400 font-mono">#education</span>
+        </button>
+        <button class="cmd-palette-item w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white flex items-center justify-between transition" data-action="#terminal-section">
+          <span class="flex items-center gap-2.5"><i data-lucide="terminal" class="w-4 h-4 text-emerald-400"></i> Open Interactive CLI</span>
+          <span class="text-xs text-slate-400 font-mono">#terminal</span>
+        </button>
+        <button class="cmd-palette-item w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white flex items-center justify-between transition" data-action="#contact">
+          <span class="flex items-center gap-2.5"><i data-lucide="send" class="w-4 h-4 text-amber-400"></i> Contact Mohd Jeshan</span>
+          <span class="text-xs text-slate-400 font-mono">#contact</span>
+        </button>
+        <div class="pt-2 border-t border-slate-800/60 px-3 py-1 text-[11px] font-mono text-slate-400">THEMES</div>
+        <button class="cmd-palette-item w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white flex items-center justify-between transition" data-action="theme:dark">
+          <span class="flex items-center gap-2.5"><i data-lucide="moon" class="w-4 h-4 text-sky-400"></i> Dark Theme</span>
+          <span class="text-xs text-slate-400 font-mono">theme:dark</span>
+        </button>
+        <button class="cmd-palette-item w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white flex items-center justify-between transition" data-action="theme:cyber">
+          <span class="flex items-center gap-2.5"><i data-lucide="terminal" class="w-4 h-4 text-emerald-400"></i> Cyber Matrix Mode</span>
+          <span class="text-xs text-slate-400 font-mono">theme:cyber</span>
+        </button>
+        <button class="cmd-palette-item w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white flex items-center justify-between transition" data-action="theme:light">
+          <span class="flex items-center gap-2.5"><i data-lucide="sun" class="w-4 h-4 text-amber-400"></i> Light Mode</span>
+          <span class="text-xs text-slate-400 font-mono">theme:light</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Application Scripts -->
+  <script src="./assets/js/data.js"></script>
+  <script src="./assets/js/canvas.js"></script>
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>
